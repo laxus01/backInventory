@@ -1,4 +1,6 @@
-const db = require("../database");
+
+const { inventory } = require('./keys');
+const db = mysql.createPool(inventory);
 const jwt = require("jsonwebtoken");
 const llave = require("../configs/config");
 

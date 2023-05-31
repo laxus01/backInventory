@@ -25,6 +25,8 @@ db.getConnection((err, connection) => {
 
     }
 
+    console.log('DB not found');
+
   }
 
   if (connection) {

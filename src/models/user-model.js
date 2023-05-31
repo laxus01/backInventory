@@ -11,10 +11,12 @@ const token = jwt.sign(payload, llave.llave, {
 
 const getUser = async (req, res) => {
   const { login, password } = req.body;
-  
   db.query(
-    "SELECT * FROM users WHERE user = '?' AND password = '?'",[login, password], (err, rows) => {
+    "SELECT * FROM users WHERE user = ? AND password = ?",
+    [login, password],
+    (err, rows) => {
       if (err)
+      console.log(err);
         return res
           .status(500)
           .send({ respuesta: "Error al consultar el usuario" });

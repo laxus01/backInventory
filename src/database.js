@@ -1,20 +1,6 @@
 const mysql = require('mysql');
 const { promisify }= require('util');
-const { 
-  DB_HOST,
-  DB_NAME,
-  DB_PASSWORD,
-  DB_USER,
-  DB_PORT
- } = require('./keys');
-
- const inventory = createPool({
-  user: DB_USER,
-  password: DB_PASSWORD,
-  host: DB_HOST,
-  database: DB_NAME
-});
-
+const { inventory } = require('./keys');
 const db = mysql.createPool(inventory);
 
 db.getConnection((err, connection) => {

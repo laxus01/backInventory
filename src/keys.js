@@ -1,4 +1,8 @@
-export const DB_HOST = process.env.DB_HOST || 'localhost'
-export const DB_USER = process.env.DB_USER || 'root'
-export const DB_PASSWORD = process.env.DB_PASSWORD || ''
-export const DB_NAME = process.env.DB_NAME || 'root'
+module.exports = {
+  inventory: {
+    host: "containers-us-west-132.railway.app",
+    user: "root",
+    password: "k8dCtvYdLFtdKTSdVCOk",
+    database: "railway",
+  },
+};

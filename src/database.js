@@ -25,16 +25,11 @@ db.getConnection((err, connection) => {
 
     }
 
-    console.log('DB not found');
-
   }
 
-  if (connection) {
-    connection.release();
-    console.log('DB is Connected');
-  } 
-    
+  if (connection) connection.release();
   
+  console.log('DB is Connected');
 
   return;
 });

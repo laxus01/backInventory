@@ -25,7 +25,7 @@ db.getConnection((err, connection) => {
 
     }
 
-    console.log("error");
+    console.log("error: "+err);
 
   }
 

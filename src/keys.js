@@ -4,5 +4,6 @@ module.exports = {
     user: "root",
     password: "k8dCtvYdLFtdKTSdVCOk",
     database: "railway",
+    port: "5746"
   },
 };

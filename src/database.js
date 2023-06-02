@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const { promisify }= require('util');
 const { inventory } = require('./keys');
 const db = mysql.createPool(inventory);

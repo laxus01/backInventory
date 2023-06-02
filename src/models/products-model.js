@@ -2,9 +2,6 @@ const db = require("../database");
 
 const saveProduct = async (req, res) => {
   const { id, detail, sale_value, existence, barcode  } = req.body;
-  const register_date = null;
-
-  
 
   db.query(
     "INSERT INTO products  (id, detail, sale_value, existence) VALUES (?, ?, ?, ?)", [id, detail, sale_value, existence], (err, productsStored) => {

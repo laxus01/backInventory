@@ -4,17 +4,8 @@ const saveProduct = async (req, res) => {
   const { id, detail, sale_value, existence, barcode  } = req.body;
   const register_date = null;
 
-  const newProduct = {
-    id,
-    detail,
-    sale_value,
-    existence,
-    register_date,
-  };
-
   db.query(
-    "INSERT INTO products set ?",
-    [newProduct],
+    "INSERT INTO products (id, detail, sale_value, existence, register_date) VALUES (?, ?, ?, ?, ?, ?)", [id, detail, sale_value, existence, register_date],
     (err, productsStored) => {
       if (err)
         return res

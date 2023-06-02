@@ -47,35 +47,6 @@ const saveNewBarcode = async (req, res) => {
       });
     }
   );
-
-  const newProduct = {
-    id,
-    detail,
-    sale_value,
-    existence,
-    register_date,
-  };
-
-  db.query(
-    "INSERT INTO products set ?",
-    [newProduct],
-    (err, productsStored) => {
-      if (err)
-        return res
-          .status(500)
-          .send({ respuesta: "Error al guardar el producto." });
-
-      if (!productsStored)
-        return res
-          .status(404)
-          .send({ respuesta: "No se ha podido guardar el producto" });
-
-      saveBarcode(barcode, id)
-      return res.status(201).send({
-        respuesta: "El producto se registro correctamente",
-      });
-    }
-  );
 };
 
 const saveBarcode = async (barcode, product_id) => {
@@ -132,11 +103,11 @@ const deletePayment = async (req, res) => {
 const updateProduct = async (req, res) => {
 
   const id = req.params.id;  
-  const { detail, sale_value, existence, barcode } = req.body;
+  const { detail, sale_value, existence } = req.body;
 
 
   db.query(
-    "UPDATE products SET detail = ?, sale_value = ?, existence = ?, barcode = ?  WHERE id = ?",[detail, sale_value, existence, barcode, id],
+    "UPDATE products SET detail = ?, sale_value = ?, existence = ?  WHERE id = ?",[detail, sale_value, existence, id],
     (err, rows) => {
       if (err)
         return res.status(500).send({ res: "Error al actualizar el producto." });

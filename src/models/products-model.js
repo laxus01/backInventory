@@ -5,7 +5,7 @@ const saveProduct = async (req, res) => {
   const register_date = null;
 
   db.query(
-    "INSERT INTO products (id, detail, sale_value, existence, register_date) VALUES (?, ?, ?, ?, ?, ?)", [id, detail, sale_value, existence, register_date],
+    "INSERT INTO products (id, detail, sale_value, existence, register_date) VALUES (?, ?, ?, ?, ?)", [id, detail, sale_value, existence, register_date],
     (err, productsStored) => {
       if (err)
         return res

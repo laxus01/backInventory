@@ -20,6 +20,14 @@ const controller = {
   async inactivateProduct(req, res) {
     await products.inactivateProduct(req, res);
   },
+
+  async getProductsByBarcode(req, res) {
+    await products.getProductsByBarcode(req, res);
+  },
+
+  async saveNewBarcode(req, res) {
+    await products.saveNewBarcode(req, res);
+  },
 };
 
 module.exports = controller;

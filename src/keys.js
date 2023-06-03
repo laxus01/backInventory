@@ -1,9 +1,8 @@
 module.exports = {
   inventory: {
-    host: "containers-us-west-126.railway.app",
+    host: "localhost",
     user: "root",
-    password: "xyVqpNDibXG2Z75J5pkT",
-    database: "railway",
-    port: 6135
+    password: "",
+    database: "inventory",
   },
 };

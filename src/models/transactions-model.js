@@ -143,7 +143,7 @@ const inactivateShopping = async (req, res) => {
 
 const saveSale = async (req, res) => {
 
-  db.query("INSERT INTO sales (id, product_id, quantity, sale_value, date, receivable_id) VALUES (?)", [req.body.data], (err, saleStored) => {
+  db.query("INSERT INTO sales (id, product_id, quantity, sale_value, date, receivable_id) VALUES ?", [req.body.data], (err, saleStored) => {
     if (err)
       return res
         .status(500)

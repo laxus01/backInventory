@@ -39,7 +39,7 @@ const getShopping = async (req, res) => {
 };
 
 const getReceivables = async (req, res) => {
-  db.query("SELECT r.id, c.client, DATE_FORMAT(s.date, '%Y-%m-%d') AS date, r.total, (SELECT COALESCE(SUM(pr.value), 0) FROM payments_receivable pr WHERE pr.receivable_id = r.id) AS total_payments FROM clients c, receivable r, sales s WHERE s.receivable_id = r.id AND r.client_id = c.id AND r.state = 1", (err, rows) => {
+  db.query("SELECT r.id, c.client, DATE_FORMAT(s.date, '%Y-%m-%d') AS date, r.total, (SELECT COALESCE(SUM(pr.value), 0) FROM payments_receivable pr WHERE pr.receivable_id = r.id) AS total_payments FROM clients c, receivable r WHERE r.client_id = c.id AND r.state = 1", (err, rows) => {
     if (err)
       return res.status(500).send({ res: "Error al consultar las compras" });
 
@@ -53,7 +53,7 @@ const getReceivables = async (req, res) => {
 };
 
 const getPayables = async (req, res) => {
-  db.query("SELECT s.supplier, DATE_FORMAT(p.date, '%Y-%m-%d') AS date, p.total, (SELECT COALESCE(SUM(pp.value), 0) FROM payments_payable pp WHERE pp.payable_id = p.id) AS total_payments FROM payable p, suppliers s, shopping sh WHERE p.supplier_id = s.id AND p.id = sh.payable_id AND p.state = 1", (err, rows) => {
+  db.query("SELECT s.supplier, DATE_FORMAT(p.date, '%Y-%m-%d') AS date, p.total, (SELECT COALESCE(SUM(pp.value), 0) FROM payments_payable pp WHERE pp.payable_id = p.id) AS total_payments FROM payable p, suppliers s WHERE p.supplier_id = s.id AND p.state = 1", (err, rows) => {
     if (err)
       return res.status(500).send({ res: "Error al consultar las compras" });
 

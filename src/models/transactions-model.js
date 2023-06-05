@@ -39,7 +39,7 @@ const getShopping = async (req, res) => {
 };
 
 const getReceivables = async (req, res) => {
-  db.query("SELECT r.id, c.client, DATE_FORMAT(s.date, '%Y-%m-%d') AS date, SUM(s.sale_value) AS total_sale, (SELECT COALESCE(SUM(pr.value), 0) FROM payments_receivable pr WHERE pr.receivable_id = r.id) AS total_payments FROM clients c, receivable r, sales s WHERE s.receivable_id = r.id AND r.client_id = c.id AND s.state = 1 GROUP BY r.id", (err, rows) => {
+  db.query("SELECT r.id, c.client, DATE_FORMAT(s.date, '%Y-%m-%d') AS date, r.total, (SELECT COALESCE(SUM(pr.value), 0) FROM payments_receivable pr WHERE pr.receivable_id = r.id) AS total_payments FROM clients c, receivable r, sales s WHERE s.receivable_id = r.id AND r.client_id = c.id AND r.state = 1", (err, rows) => {
     if (err)
       return res.status(500).send({ res: "Error al consultar las compras" });
 
@@ -53,7 +53,7 @@ const getReceivables = async (req, res) => {
 };
 
 const getPayables = async (req, res) => {
-  db.query("SELECT p.id, s.supplier, DATE_FORMAT(p.date, '%Y-%m-%d') AS date, SUM(sh.total_value) AS total_shopping, (SELECT COALESCE(SUM(pp.value), 0) FROM payments_payable pp WHERE pp.payable_id = p.id) AS total_payments FROM suppliers s, payable p, shopping sh WHERE s.id = p.supplier_id AND p.id = sh.payable_id AND p.state = 1 GROUP BY p.id", (err, rows) => {
+  db.query("SELECT s.supplier, DATE_FORMAT(p.date, '%Y-%m-%d') AS date, p.total, (SELECT COALESCE(SUM(pp.value), 0) FROM payments_payable pp WHERE pp.payable_id = p.id) AS total_payments FROM payable p, suppliers s, shopping sh WHERE p.supplier_id = s.id AND p.id = sh.payable_id AND p.state = 1", (err, rows) => {
     if (err)
       return res.status(500).send({ res: "Error al consultar las compras" });
 
@@ -254,12 +254,13 @@ const inactivatePayable = async (payable_id) => {
 
 const saveReceivable = (data) => {
 
-  const { id, client_id, date } = data;
+  const { id, client_id, date, total } = data;
 
   const dataReceivable = {
     id, 
     client_id,
-    date
+    date,
+    total,
   }
 
   db.query("INSERT INTO receivable set ?", [dataReceivable], (err, receivableStored) => {
@@ -275,12 +276,13 @@ const saveReceivable = (data) => {
 
 const savePayable = (data) => {
 
-  const { id, supplier_id, date } = data;
+  const { id, supplier_id, date, total } = data;
 
   const dataPayable = {
     id, 
     supplier_id,
-    date
+    date,
+    total,
   }
 
   db.query("INSERT INTO payable set ?", [dataPayable], (err, payableStored) => {

@@ -53,7 +53,7 @@ const getReceivables = async (req, res) => {
 };
 
 const getPayables = async (req, res) => {
-  db.query("SELECT s.supplier, DATE_FORMAT(p.date, '%Y-%m-%d') AS date, p.total, (SELECT COALESCE(SUM(pp.value), 0) FROM payments_payable pp WHERE pp.payable_id = p.id) AS total_payments FROM payable p, suppliers s WHERE p.supplier_id = s.id AND p.state = 1", (err, rows) => {
+  db.query("SELECT p.id, s.supplier, DATE_FORMAT(p.date, '%Y-%m-%d') AS date, p.total, (SELECT COALESCE(SUM(pp.value), 0) FROM payments_payable pp WHERE pp.payable_id = p.id) AS total_payments FROM payable p, suppliers s WHERE p.supplier_id = s.id AND p.state = 1", (err, rows) => {
     if (err)
       return res.status(500).send({ res: "Error al consultar las compras" });
 

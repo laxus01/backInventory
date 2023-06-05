@@ -39,7 +39,7 @@ const getShopping = async (req, res) => {
 };
 
 const getReceivables = async (req, res) => {
-  db.query("SELECT r.id, c.client, DATE_FORMAT(s.date, '%Y-%m-%d') AS date, r.total, (SELECT COALESCE(SUM(pr.value), 0) FROM payments_receivable pr WHERE pr.receivable_id = r.id) AS total_payments FROM clients c, receivable r WHERE r.client_id = c.id AND r.state = 1", (err, rows) => {
+  db.query("SELECT r.id, c.client, DATE_FORMAT(r.date, '%Y-%m-%d') AS date, r.total, (SELECT COALESCE(SUM(pr.value), 0) FROM payments_receivable pr WHERE pr.receivable_id = r.id) AS total_payments FROM clients c, receivable r WHERE r.client_id = c.id AND r.state = 1", (err, rows) => {
     if (err)
       return res.status(500).send({ res: "Error al consultar las compras" });
 
